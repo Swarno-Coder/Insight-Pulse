@@ -1,0 +1,92 @@
+# Python bytecode, caches, and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+.installed.cfg
+
+# Virtual environments
+.env
+.env.*
+venv/
+venv*/
+.venv/
+env/
+ENV/
+
+# Testing, type checking
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.pytype/
+
+# Jupyter
+.ipynb_checkpoints/
+# Keep notebooks tracked; ignore checkpoints and exported files
+*.nbconvert.ipynb
+
+# Data files and large binaries (models, datasets, caches)
+data/
+datasets/
+models/
+checkpoints/
+results/
+reports/
+*.h5
+*.hdf5
+*.hdf
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.parquet
+*.feather
+*.parq
+*.sqlite
+*.db
+*.db3
+*.tar.gz
+*.zip
+
+# Logs and runtime files
+logs/
+*.log
+*.out
+*.pid
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets / local config
+*.env
+local_settings.py
+secrets.yml
+
+
+AutogluonModels/
+app.py
+QUICKSTART.md
+README_MAINAPP.md
+*.bat
+*.ps1
