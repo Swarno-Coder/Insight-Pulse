@@ -247,7 +247,8 @@ if uploaded_file is not None:
                             """, unsafe_allow_html=True)
                         
                         # Generated Code
-                        with st.expander("💻 View Generated Code"):
+                        with st.container():
+                            st.markdown("**💻 Generated Code:**")
                             st.code(result['code'], language='python')
                         
                         # Execution Output
@@ -272,7 +273,8 @@ if uploaded_file is not None:
                         """, unsafe_allow_html=True)
                         
                         if result.get('code'):
-                            with st.expander("💻 View Attempted Code"):
+                            with st.container():
+                                st.markdown("**💻 Attempted Code:**")
                                 st.code(result['code'], language='python')
         
         # Download section
