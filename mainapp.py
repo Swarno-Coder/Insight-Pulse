@@ -617,4 +617,4 @@ with st.sidebar:
             st.session_state.df = None
             st.session_state.chat_history = []
             st.session_state.data_loaded = False
-            st.rerun()
+            st.experimental_rerun()
