@@ -2,6 +2,37 @@
 
 An intelligent agent that reads any uploaded CSV file, performs full exploratory data analysis (EDA), builds predictive models, and narrates insights in human-readable language.
 
+## 🌐 Streamlit Cloud Deployment
+
+### Quick Deploy to Streamlit Cloud
+
+1. **Fork/Clone this repository** to your GitHub account
+
+2. **Go to [Streamlit Cloud](https://share.streamlit.io/)**
+
+3. **Click "New app"** and select this repository
+
+4. **Configure Secrets** (Important!):
+   - Click on "Advanced settings" → "Secrets"
+   - Add your Gemini API key:
+   ```toml
+   GEMINI_API_KEY = "your_actual_gemini_api_key_here"
+   GEMINI_MODEL = "gemini-2.5-flash"
+   ```
+   - Get your API key from: [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+5. **Deploy!** - The app will automatically build and launch
+
+### Configuration Files for Cloud
+
+The repository includes:
+- `.python-version` - Forces Python 3.11 (required for dependency compatibility)
+- `.streamlit/config.toml` - Streamlit configuration with theme settings
+- `packages.txt` - System dependencies
+- `.streamlit/secrets.toml.example` - Example secrets file
+
+**Note**: Never commit your actual API key to the repository! Always use Streamlit Cloud's Secrets management.
+
 ## 📋 Overview
 
 InsightPulse is designed for data scientists who need quick, automated insights from their datasets. Simply upload a CSV file and get:
