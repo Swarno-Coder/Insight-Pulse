@@ -20,48 +20,263 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for minimalist design
+# Initialize session state
+if 'dark_mode' not in st.session_state:
+    st.session_state.dark_mode = True
+
+# Dynamic CSS based on theme
+def get_theme_css(dark_mode):
+    if dark_mode:
+        # Dark Mode - Modern Purple/Pink Gradient
+        return """
+        <style>
+            :root {
+                --primary: #FF6B9D;
+                --secondary: #C44569;
+                --accent: #A855F7;
+                --bg-1: #0F0E17;
+                --bg-2: #1A1625;
+                --bg-3: #2E2739;
+                --text-primary: #FFFFFE;
+                --text-secondary: #A7A9BE;
+                --success: #06FFA5;
+                --error: #FF6B9D;
+                --info: #4CC9F0;
+            }
+        </style>
+        """
+    else:
+        # Light Mode - Fresh Gradient
+        return """
+        <style>
+            :root {
+                --primary: #FF006E;
+                --secondary: #8338EC;
+                --accent: #3A86FF;
+                --bg-1: #FEFEFE;
+                --bg-2: #F8F7FF;
+                --bg-3: #FFFFFF;
+                --text-primary: #0F0E17;
+                --text-secondary: #5E5D71;
+                --success: #06D6A0;
+                --error: #EF476F;
+                --info: #118AB2;
+            }
+        </style>
+        """
+
+# Apply theme-specific colors
+st.markdown(get_theme_css(st.session_state.dark_mode), unsafe_allow_html=True)
+
+# Universal CSS styling
 st.markdown("""
 <style>
-    .main-header {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1f77b4;
-        margin-bottom: 0.5rem;
+    /* App background with gradient */
+    .stApp {
+        background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+        color: var(--text-primary);
     }
+    
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Animated gradient header */
+    .main-header {
+        font-size: 2.8rem;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientShift 4s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
     .sub-header {
         font-size: 1.1rem;
-        color: #666;
+        color: var(--text-secondary);
         margin-bottom: 2rem;
+        font-weight: 500;
     }
+
+    /* Modern button with gradient and hover effects */
     .stButton>button {
         width: 100%;
-        background-color: #1f77b4;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
         color: white;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        padding: 0.7rem 1.2rem;
+        font-weight: 700;
+        border: none;
+        box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+
+    .stButton>button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 32px rgba(255, 107, 157, 0.4);
+        filter: brightness(1.1);
+    }
+
+    .stButton>button:active {
+        transform: translateY(-1px);
+    }
+
+    /* Status boxes with modern design */
+    .status-box {
+        padding: 1.2rem;
+        border-radius: 16px;
+        margin: 1rem 0;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .success-box {
+        background: linear-gradient(135deg, 
+            rgba(6, 255, 165, 0.1) 0%, 
+            rgba(6, 255, 165, 0.05) 100%);
+        border-left: 4px solid var(--success);
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(6, 255, 165, 0.1);
+    }
+
+    .error-box {
+        background: linear-gradient(135deg, 
+            rgba(239, 71, 111, 0.1) 0%, 
+            rgba(239, 71, 111, 0.05) 100%);
+        border-left: 4px solid var(--error);
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(239, 71, 111, 0.1);
+    }
+
+    .info-box {
+        background: linear-gradient(135deg, 
+            rgba(76, 201, 240, 0.1) 0%, 
+            rgba(76, 201, 240, 0.05) 100%);
+        border-left: 4px solid var(--info);
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(76, 201, 240, 0.1);
+    }
+
+    /* Sidebar styling */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    /* File uploader */
+    .stFileUploader {
+        border-radius: 12px;
+    }
+    
+    /* Input fields */
+    .stTextInput>div>div>input, .stTextArea>div>div>textarea {
+        border-radius: 10px;
+        border: 2px solid rgba(255, 107, 157, 0.2);
+        background: var(--bg-3);
+        color: var(--text-primary);
+    }
+    
+    .stTextInput>div>div>input:focus, .stTextArea>div>div>textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(255, 107, 157, 0.2);
+    }
+
+    /* Code blocks */
+    pre {
+        background: var(--bg-3) !important;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 107, 157, 0.1);
+        padding: 1rem !important;
+    }
+    
+    /* Expander */
+    .streamlit-expanderHeader {
+        background: var(--bg-3);
+        border-radius: 10px;
+        color: var(--text-primary);
         font-weight: 600;
     }
-    .stButton>button:hover {
-        background-color: #1557b0;
+    
+    /* Headers and section titles */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--text-primary);
+        font-weight: 700 !important;
     }
-    .status-box {
-        padding: 1rem;
+    
+    h3 {
+        font-size: 1.5rem !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 1rem !important;
+        color: var(--text-primary);
+    }
+    
+    /* Regular text - don't override everything */
+    .stMarkdown p {
+        color: var(--text-primary);
+    }
+    
+    /* Labels and normal text */
+    label {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: var(--text-secondary);
         border-radius: 8px;
-        margin: 1rem 0;
+        padding: 8px 16px;
+        background: var(--bg-3);
+        font-weight: 600;
     }
-    .success-box {
-        background-color: #d4edda;
-        border-left: 4px solid #28a745;
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white !important;
     }
-    .error-box {
-        background-color: #f8d7da;
-        border-left: 4px solid #dc3545;
+    
+    /* Success/Error/Info messages */
+    .stSuccess, .stError, .stInfo, .stWarning {
+        background: var(--bg-3);
+        color: var(--text-primary);
     }
-    .info-box {
-        background-color: #d1ecf1;
-        border-left: 4px solid #17a2b8;
+    
+    /* Dataframes and tables */
+    .stDataFrame {
+        color: var(--text-primary);
     }
+    
+    /* Sidebar - only specific elements */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] div {
+        color: var(--text-primary);
+    }
+    
+    /* Better text contrast */
+    .stMarkdown p, .stMarkdown div {
+        line-height: 1.6;
+    }
+    
 </style>
 """, unsafe_allow_html=True)
 
@@ -90,6 +305,17 @@ except ValueError as e:
     st.stop()
 
 st.sidebar.success(api_key_status)
+
+# Theme Toggle in Sidebar
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🎨 Theme")
+
+theme_label = "🌙 Dark" if st.session_state.dark_mode else "☀️ Light"
+if st.sidebar.button(f"{theme_label} Mode - Click to Toggle", key="theme_toggle", use_container_width=True):
+    st.session_state.dark_mode = not st.session_state.dark_mode
+    st.experimental_rerun()
+
+st.sidebar.markdown("---")
 
 # File Upload Section
 st.markdown("### 📁 Step 1: Upload Your Dataset")
